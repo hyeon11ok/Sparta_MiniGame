@@ -34,4 +34,13 @@ public abstract class BasePlayerController : MonoBehaviour
 
     public abstract void Move();
     public abstract void Rotate();
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        ITrigger trigger;
+        if(collision.TryGetComponent<ITrigger>(out trigger))
+        {
+            trigger.TriggerEnterEvent(gameObject);
+        }
+    }
 }
