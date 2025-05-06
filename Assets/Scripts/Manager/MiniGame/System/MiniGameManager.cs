@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MiniGameManager : GameManager
+public abstract class MiniGameManager : MonoBehaviour
 {
     public ScoreData GameScore { get; private set; } = new ScoreData();
     public int CurScore { get; private set; }
@@ -22,7 +22,7 @@ public abstract class MiniGameManager : GameManager
         // TODO : 점수 기록
         Debug.Log($"Add Score");
         // TODO : 점수 저장
-        DataManager.Instance.SaveScore(CurrentScene, GameScore);
+        DataManager.Instance.SaveScore(GameManager.Instance.CurrentScene, GameScore);
     }
 
     public void IncreaseScore()

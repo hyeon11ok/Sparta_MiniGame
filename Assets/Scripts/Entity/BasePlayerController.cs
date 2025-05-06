@@ -18,12 +18,18 @@ public abstract class BasePlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        Rotate();
+        if(!GameManager.Instance.IsPause)
+        {
+            Rotate();
+        }
     }
 
     protected virtual void FixedUpdate()
     {
-        Move();
+        if(!GameManager.Instance.IsPause)
+        {
+            Move();
+        }
     }
 
     public abstract void Move();

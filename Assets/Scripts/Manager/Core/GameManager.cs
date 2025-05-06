@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Scripting;
 
 public enum SceneName
 {
@@ -14,25 +16,31 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public SceneName CurrentScene { get; private set; }
+    public bool IsPause { get; private set; } = false;
 
     private void Awake()
     {
         if(Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
     public virtual void ResumeGame()
     {
-        // TODO : 게임 실행 로직
-        Debug.Log("Resume Game");
+        Time.timeScale = 1;
+        IsPause = false;
     }
 
     public virtual void PauseGame()
     {
-        // TODO : 게임 일시정지 로직
-        Debug.Log("Pause Game");
+        Time.timeScale = 0;
+        IsPause = true;
     }
 
     public void ExitGame()
@@ -47,7 +55,21 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene(SceneName sceneName)
     {
-        // TODO : 씬 전환 로직
-        Debug.Log($"Change Scene to {sceneName}");
+        StartCoroutine(LoadAndCleanup(sceneName.ToString()));
+        CurrentScene = sceneName;
+    }
+
+    private IEnumerator LoadAndCleanup(string sceneName)
+    {
+        // 새 씬 비동기 로드
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName);
+        while(!loadOp.isDone)
+            yield return null;
+
+        // 사용되지 않는 에셋 언로드
+        yield return Resources.UnloadUnusedAssets();
+
+        // 가비지 콜렉터 강제 실행
+        System.GC.Collect();
     }
 }
