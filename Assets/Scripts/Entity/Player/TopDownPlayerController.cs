@@ -5,27 +5,47 @@ using UnityEngine.InputSystem;
 
 public class TopDownPlayerController : BasePlayerController
 {
+    private static readonly int IsMoving = Animator.StringToHash("IsMove");
+
     [SerializeField] private float speed;
     private Vector2 moveDir;
     private Vector2 lookDir;
 
     public override void Move()
     {
-        throw new System.NotImplementedException();
+        Vector2 dir = moveDir * speed;
+
+        _rigidbody.velocity = dir;
+
+        animator.SetBool(IsMoving, dir.magnitude > 0.5f);
     }
 
     public override void Rotate()
     {
-        throw new System.NotImplementedException();
+        float rotZ = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+        bool isLeft = Mathf.Abs(rotZ) > 90f;
+
+        characterRenderer.flipX = isLeft;
     }
 
     public void OnMove(InputValue inputValue)
     {
-        // TODO : 캐릭터 이동
+        moveDir = inputValue.Get<Vector2>().normalized;
     }
 
     public void OnLook(InputValue inputValue)
     {
-        // TODO : 마우스 방향에 따라 캐릭터 플립
+        Vector2 mousePosition = inputValue.Get<Vector2>();
+        Vector2 worldPos = Camera.main.ScreenToWorldPoint(mousePosition);
+        lookDir = (worldPos - (Vector2)transform.position);
+
+        if(lookDir.magnitude < 0.9f)
+        {
+            lookDir = Vector2.zero;
+        }
+        else
+        {
+            lookDir = lookDir.normalized;
+        }
     }
 }
