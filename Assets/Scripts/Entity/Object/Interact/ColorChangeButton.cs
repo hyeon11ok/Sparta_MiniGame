@@ -10,11 +10,27 @@ public enum ButtonType
 
 public class ColorChangeButton : MonoBehaviour, IInteractive
 {
+    private static readonly int IsMoving = Animator.StringToHash("IsClick");
+
+    private Animator animator;
+
     [SerializeField] private ButtonType buttonType;
     [SerializeField] private GameObject[] changeObjects;
 
+    private void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
     public void InteractEvent()
     {
-        // TODO : 타입에 따라 오브젝트 활성화
+        animator.SetTrigger(IsMoving);
+
+        foreach(GameObject obj in changeObjects)
+        {
+            obj.SetActive(false);
+        }
+
+        changeObjects[(int)buttonType].SetActive(true);
     }
 }

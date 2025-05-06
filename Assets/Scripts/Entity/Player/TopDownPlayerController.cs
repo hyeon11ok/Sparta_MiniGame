@@ -11,6 +11,9 @@ public class TopDownPlayerController : BasePlayerController
     private Vector2 moveDir;
     private Vector2 lookDir;
 
+    [SerializeField] private float interactRange;
+    [SerializeField] private float centerTemp;
+
     public override void Move()
     {
         Vector2 dir = moveDir * speed;
@@ -47,5 +50,23 @@ public class TopDownPlayerController : BasePlayerController
         {
             lookDir = lookDir.normalized;
         }
+    }
+
+    public void OnInteraction(InputValue inputValue)
+    {
+        if(inputValue.isPressed)
+        {
+            Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position + (Vector3.up * centerTemp), interactRange, 1 << 7);
+            if(hit.Length > 0)
+            {
+                hit[0].GetComponent<IInteractive>().InteractEvent();
+            }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position + (Vector3.up * centerTemp), interactRange);
     }
 }
