@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour, ITrigger
 {
-    private Vector2 startPos;
-
-    private void Start()
-    {
-        startPos = FindObjectOfType<BasePlayerController>().transform.position;
-    }
+    [SerializeField] private Vector2 startPos;
 
     public void TriggerEnterEvent(GameObject gameObject)
     {
