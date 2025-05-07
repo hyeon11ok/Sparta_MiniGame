@@ -154,8 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgRenderer: {fileID: 1734328785}
   speedOfBg: 0.2
-  originBomb: {fileID: 0}
-  originCoin: {fileID: 0}
+  originBomb: {fileID: 8283929307184741693, guid: 20b20046242d84d41b5b3484f6d4e721, type: 3}
+  originCoin: {fileID: 8859149898798051691, guid: 6ee499688eba5d5479583cc2871bb0d4, type: 3}
 --- !u!4 &9582709
 Transform:
   m_ObjectHideFlags: 0
@@ -308,7 +308,6 @@ Transform:
   m_Children:
   - {fileID: 1734328786}
   - {fileID: 1924205018}
-  - {fileID: 1362015497}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1362015494
@@ -320,9 +319,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1362015497}
-  - component: {fileID: 1362015496}
   - component: {fileID: 1362015495}
   - component: {fileID: 1362015498}
+  - component: {fileID: 1362015496}
   - component: {fileID: 1362015499}
   m_Layer: 0
   m_Name: Player
@@ -388,10 +387,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0302cc346bf8a428fd0b4225870daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flapForce: 6
-  forwardSpeed: 3
-  isDead: 0
-  deathCooldown: 0
+  fowardSpeed: 3
+  jumpForce: 6
 --- !u!4 &1362015497
 Transform:
   m_ObjectHideFlags: 0
@@ -406,7 +403,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 369411651}
-  m_Father: {fileID: 547032019}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1362015498
 Rigidbody2D:
@@ -423,7 +420,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -462,7 +459,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: TopDownPlayer
+  m_DefaultActionMap: RunningPlayer
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &1734328784
@@ -559,7 +556,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1924205018}
   - component: {fileID: 1924205019}
-  m_Layer: 0
+  - component: {fileID: 1924205020}
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -633,6 +631,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1924205020
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924205017}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &2086854563
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,6 +687,7 @@ GameObject:
   - component: {fileID: 2086854566}
   - component: {fileID: 2086854565}
   - component: {fileID: 2086854564}
+  - component: {fileID: 2086854567}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -725,6 +769,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2086854567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086854563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -732,3 +820,4 @@ SceneRoots:
   - {fileID: 2086854566}
   - {fileID: 9582709}
   - {fileID: 547032019}
+  - {fileID: 1362015497}

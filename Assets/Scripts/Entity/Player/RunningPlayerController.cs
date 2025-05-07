@@ -1,44 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class RunningPlayerController : BasePlayerController
 {
-    [SerializeField] private float flapForce = 6f;
-    [SerializeField] private float forwardSpeed = 3f;
-    [SerializeField] private bool isDead = false;
-    [SerializeField] private float deathCooldown = 0f;
-
-    bool isFlap = false;
+    [SerializeField] private float fowardSpeed;
+    [SerializeField] private float jumpForce;
+    private bool isJump = false;
 
     public override void Move()
     {
-        if(isDead) return;
-
-        Vector3 velocity = _rigidbody.velocity;
-        velocity.x = forwardSpeed;
-
-        if(isFlap)
+        if(isJump && _rigidbody.velocity.y < 0)
         {
-            velocity.y += flapForce;
-            isFlap = false;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.5f, 1 << 6);
+            if(hit.collider != null)
+            {
+                isJump = false;
+            }
         }
-
-        _rigidbody.velocity = velocity;
     }
 
     public override void Rotate()
     {
-        float angle = Mathf.Clamp((_rigidbody.velocity.y * 10f), -90, 90);
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        
     }
 
     public void OnJump(InputValue inputValue)
     {
-        if(inputValue.isPressed)
+        if(inputValue.isPressed && !isJump)
         {
-            isFlap = true;
+            Vector3 velocity = _rigidbody.velocity;
+            velocity.y += jumpForce;
+            _rigidbody.velocity = velocity;
+            isJump = true;
         }
     }
 }
