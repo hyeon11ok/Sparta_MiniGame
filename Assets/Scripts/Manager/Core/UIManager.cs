@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class UIManager : MonoBehaviour
 {
-    [SerializeField] protected GameManager gameManager;
     protected UIState curState;
     protected OptionUI option;
 

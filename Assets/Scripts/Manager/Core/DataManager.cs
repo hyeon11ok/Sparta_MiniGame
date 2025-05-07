@@ -6,6 +6,10 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager Instance { get; private set; }
 
+    private List<MiniGameData> miniGameDatas = new List<MiniGameData>();
+
+    public List<MiniGameData> MiniGameDatas { get { return miniGameDatas; } }
+
     private void Awake()
     {
         if(Instance == null)
@@ -17,19 +21,32 @@ public class DataManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        miniGameDatas.Add(new MiniGameData("RunningGame", SceneName.Running));
+        miniGameDatas.Add(new MiniGameData("StackGame", SceneName.TheStack));
+        miniGameDatas.Add(new MiniGameData("CountingGame", SceneName.CountingNum));
+
+        foreach(MiniGameData data in miniGameDatas)
+        {
+            data.ScoreInit(LoadData(data));
+        }
     }
 
-    public void SaveScore(SceneName sceneName, ScoreData data)
+    public void SaveData(MiniGameData miniGame)
     {
-        // TODO : 데이터 저장 로직
-        Debug.Log($"Save Score for {sceneName}");
+        PlayerPrefs.SetString(miniGame.GameName, miniGame.ScoreRank);
     }
 
-    public ScoreData LoadData(string sceneName)
+    public string LoadData(MiniGameData miniGame)
     {
-        // TODO : 데이터 로드 로직
-        Debug.Log($"Load Data for {sceneName}");
+        return PlayerPrefs.GetString(miniGame.GameName, "");
+    }
 
-        return new ScoreData();
+    private void OnApplicationQuit()
+    {
+        foreach(MiniGameData data in miniGameDatas)
+        {
+            SaveData(data);
+        }
     }
 }

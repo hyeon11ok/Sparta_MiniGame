@@ -4,46 +4,69 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum GameSlot
-{
-    Prev,
-    Select,
-    Next
-}
-
 public class GameSelectUI : BaseUI
 {
     [SerializeField] private Transform[] gameSlot;
-    [SerializeField] private GameObject[] gameButton;
-    private SceneName selectedScene;
+    [SerializeField] private Button closeBtn;
+    private int curIdx = 0;
+
+    private void OnEnable()
+    {
+        Init();
+    }
 
     private void SetGameSlot()
     {
-        // TODO : 게임 슬롯 설정
+        int i = -1;
+        foreach(Transform t in gameSlot)
+        {
+            int idx = curIdx + i;
+            if(idx < 0)
+                idx = DataManager.Instance.MiniGameDatas.Count - 1;
+            else if (idx >= DataManager.Instance.MiniGameDatas.Count)
+                idx = 0;
+
+            t.GetChild(0).GetComponent<TextMeshProUGUI>().text = DataManager.Instance.MiniGameDatas[idx].GameName;
+            t.GetChild(2).GetComponent<TextMeshProUGUI>().text = DataManager.Instance.MiniGameDatas[idx].ScoreRank.Replace("/", "\n");
+            i++;
+        }
     }
 
     public void NextGame()
     {
-        // TODO : selectedScene 1 증가
+        curIdx++;
+        if(curIdx >= DataManager.Instance.MiniGameDatas.Count)
+            curIdx = 0;
+
+        SetGameSlot();
     }
 
     public void PrevGame()
     {
-        // TODO : selectedScene 1 감소
+        curIdx--;
+        if(curIdx < 0)
+            curIdx = DataManager.Instance.MiniGameDatas.Count - 1;
+
+        SetGameSlot();
     }
 
     public void SelectGame()
     {
-        // TODO : 선택한 게임 씬으로 전환
+        GameManager.Instance.ChangeScene(DataManager.Instance.MiniGameDatas[curIdx].sceneName);
     }
 
     public override UIState GetUIState()
     {
-        throw new System.NotImplementedException();
+        return UIState.GameSelectUI;
     }
 
     public override void Init()
     {
-        throw new System.NotImplementedException();
+        SetGameSlot();
+    }
+
+    public void ClosedUI()
+    {
+        GameManager.Instance.ResumeGame();
     }
 }

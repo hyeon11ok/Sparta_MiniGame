@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class MiniGameManager : MonoBehaviour
 {
-    public ScoreData GameScore { get; private set; } = new ScoreData();
     public int CurScore { get; private set; }
 
     protected virtual void Start()
@@ -22,7 +21,6 @@ public abstract class MiniGameManager : MonoBehaviour
         // TODO : 점수 기록
         Debug.Log($"Add Score");
         // TODO : 점수 저장
-        DataManager.Instance.SaveScore(GameManager.Instance.CurrentScene, GameScore);
     }
 
     public void IncreaseScore()

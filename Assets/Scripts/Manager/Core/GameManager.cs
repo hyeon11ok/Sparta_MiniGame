@@ -10,7 +10,7 @@ public enum SceneName
 {
     Lobby, 
     Running,
-    StackBlock,
+    TheStack,
     CountingNum
 }
 
@@ -69,11 +69,11 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene(SceneName sceneName)
     {
-        StartCoroutine(LoadAndCleanup(sceneName.ToString()));
+        StartCoroutine(LoadAndCleanup((int)sceneName));
         CurrentScene = sceneName;
     }
 
-    private IEnumerator LoadAndCleanup(string sceneName)
+    private IEnumerator LoadAndCleanup(int sceneName)
     {
         // 새 씬 비동기 로드
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName);
@@ -85,6 +85,9 @@ public class GameManager : MonoBehaviour
 
         // 가비지 콜렉터 강제 실행
         System.GC.Collect();
+
+        ResumeGame();
+        AudioManager.Instance.ChangeBGM(CurrentScene);
     }
 
     public void OnOption(InputValue inputValue)

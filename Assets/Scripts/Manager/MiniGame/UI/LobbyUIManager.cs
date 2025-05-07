@@ -6,24 +6,30 @@ public class LobbyUIManager : UIManager
 {
     private GameSelectUI gameSelectUI;
 
+    private void Start()
+    {
+        Init();
+    }
+
     public void ShowSelectUI()
     {
+        GameManager.Instance.PauseGame();
         ChangeState(UIState.GameSelectUI);
     }
 
-    public void SelectGameScene(SceneName name)
+    public void CloseUI()
     {
-        // gameManager.ChangeScene(name);
+        ChangeState(UIState.None);
     }
 
     public override void ChangeState(UIState state)
     {
-        throw new System.NotImplementedException();
-        // TODO : UIState 변경 후 활성화
+        curState = state;
+        gameSelectUI.ActiveChange(curState);
     }
 
     public override void Init()
     {
-        throw new System.NotImplementedException();
+        gameSelectUI = GetComponentInChildren<GameSelectUI>(true);
     }
 }

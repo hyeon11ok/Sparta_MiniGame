@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum  UIState
 {
+    None,
     GameSelectUI,
     ScoreUI,
     OptionUI
@@ -25,8 +26,8 @@ public abstract class BaseUI : MonoBehaviour
     // TODO : UI 종류 반환 로직
     public abstract UIState GetUIState();
 
-    public void SetActive(UIState state)
+    public void ActiveChange(UIState state)
     {
-        // TODO : UI 활성화 로직
+        this.gameObject.SetActive(GetUIState() == state);
     }
 }
