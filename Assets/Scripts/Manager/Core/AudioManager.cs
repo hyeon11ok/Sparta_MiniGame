@@ -5,64 +5,77 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
+    private const string m_VolumeKey = "MasterVolume";
+    private const string b_VolumeKey = "BGMVolume";
+    private const string s_VolumeKey = "SFXVolume";
+
     public static AudioManager Instance { get; private set; }
 
     [SerializeField] private AudioClip[] bgClips;
     [SerializeField] private AudioMixer mixer;
     private AudioSource audioSource;
 
+    public float m_value {  get; private set; }
+    public float b_value { get; private set; }
+    public float s_value { get; private set; }
+
     private void Awake()
     {
         if(Instance == null)
             Instance = this;
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = bgClips[(int)SceneName.Lobby];
+        audioSource.outputAudioMixerGroup = mixer.FindMatchingGroups("BGM")[0];
+        audioSource.Play();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-    }
-
-    private void Init()
-    {
-        // TODO : 저장된 오디오 정보 불러오기
+        LoadVolume();
+        ChangeMasterVolume(m_value);
+        ChangeBGMVolume(b_value);
+        ChangeSFXVolume(s_value);
     }
 
     public void ChangeBGM(SceneName sceneName)
     {
-        // 현재 씬에 맞는 배경음악으로 교체
+        audioSource.Stop();
+        audioSource.clip = bgClips[(int)sceneName];
+        audioSource.Play();
+    }
+
+    public void SaveVolume()
+    {
+        PlayerPrefs.SetFloat(m_VolumeKey, m_value);
+        PlayerPrefs.SetFloat(b_VolumeKey, b_value);
+        PlayerPrefs.SetFloat(s_VolumeKey, s_value);
+    }
+
+    public void LoadVolume()
+    {
+        m_value = PlayerPrefs.GetFloat(m_VolumeKey, 1);
+        b_value = PlayerPrefs.GetFloat(b_VolumeKey, 1);
+        s_value = PlayerPrefs.GetFloat(s_VolumeKey, 1);
     }
 
     public void ChangeMasterVolume(float value)
     {
-        // TODO : 마스터 음량 변경
+        mixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20);
+        m_value = value;
     }
 
     public void ChangeBGMVolume(float value)
     {
-        // TODO : 배경 음량 변경
+        mixer.SetFloat("BGMVolume", Mathf.Log10(value) * 20);
+        b_value = value;
     }
 
     public void ChangeSFXVolume(float value)
     {
-        // TODO : 효과 음량 변경
-    }
-
-    public float GetMasterVolume()
-    {
-        // TODO : 마스터 음량 반환
-        return 0;
-    }
-
-    public float GetBGMVolume()
-    {
-        // TODO : 배경 음량 반환
-        return 0;
-    }
-
-    public float GetSFXVolume()
-    {
-        // TODO : 효과 음량 반환
-        return 0;
+        mixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20);
+        s_value = value;
     }
 }

@@ -112,6 +112,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Option",
+            "id": "45eba1b6-f354-48b6-944a-55c107e270ea",
+            "actions": [
+                {
+                    "name": "Option",
+                    "type": "Value",
+                    "id": "8a8bb02b-013c-4be5-b538-3a140f5e50c0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a3775cc2-658e-4f3d-80ba-5b6a2b2eeef2",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Option",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

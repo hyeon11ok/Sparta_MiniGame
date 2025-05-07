@@ -17,7 +17,7 @@ public class ScoreUI:BaseUI
         throw new System.NotImplementedException();
     }
 
-    public override void Init(UIManager manager)
+    public override void Init()
     {
         throw new System.NotImplementedException();
     }

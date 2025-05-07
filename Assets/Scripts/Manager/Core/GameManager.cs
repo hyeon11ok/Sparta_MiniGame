@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Scripting;
 
@@ -22,8 +23,9 @@ public class GameManager : MonoBehaviour
     public bool god;
 
     [SerializeField] private AnimatorController playerAnim;
-
     public AnimatorController PlayerAnim { get { return playerAnim; } }
+
+    [SerializeField] private GameObject optionUI;
 
     private void Awake()
     {
@@ -83,5 +85,13 @@ public class GameManager : MonoBehaviour
 
         // 가비지 콜렉터 강제 실행
         System.GC.Collect();
+    }
+
+    public void OnOption(InputValue inputValue)
+    {
+        if(inputValue.isPressed)
+        {
+            optionUI.SetActive(true);
+        }
     }
 }

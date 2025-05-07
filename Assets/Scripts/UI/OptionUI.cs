@@ -9,10 +9,21 @@ public class OptionUI : BaseUI
     [SerializeField] private Slider bgmVolume;
     [SerializeField] private Slider sfxVolume;
 
-    public void Accept()
+    private void Awake()
     {
-        // TODO : 옵션 저장 로직
-        Debug.Log("OptionUI Accept");
+        // uiManager = FindObjectOfType<UIManager>();
+    }
+
+    private void OnEnable()
+    {
+        Init();
+    }
+
+    public void Close()
+    {
+        AudioManager.Instance.ChangeMasterVolume(AudioManager.Instance.m_value);
+        AudioManager.Instance.ChangeBGMVolume(AudioManager.Instance.b_value);
+        AudioManager.Instance.ChangeSFXVolume(AudioManager.Instance.s_value);
     }
 
     public override UIState GetUIState()
@@ -20,8 +31,11 @@ public class OptionUI : BaseUI
         return UIState.OptionUI;
     }
 
-    public override void Init(UIManager manager)
+    public override void Init()
     {
-        // TODO : 오디오 설정 동기화
+        AudioManager.Instance.LoadVolume();
+        masterVolume.value = AudioManager.Instance.m_value;
+        bgmVolume.value = AudioManager.Instance.b_value;
+        sfxVolume.value = AudioManager.Instance.s_value;
     }
 }

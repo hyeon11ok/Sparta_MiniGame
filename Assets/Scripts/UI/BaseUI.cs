@@ -20,7 +20,7 @@ public abstract class BaseUI : MonoBehaviour
     }
 
     // TODO : UI 초기화 로직
-    public abstract void Init(UIManager manager);
+    public abstract void Init();
 
     // TODO : UI 종류 반환 로직
     public abstract UIState GetUIState();
