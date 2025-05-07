@@ -14,21 +14,37 @@ public class RunningGameManager:MiniGameManager
     [SerializeField] private GameObject originBomb;
     [SerializeField] private GameObject originCoin;
 
+    private const int poolCnt = 20;
     public List<Bomb> BombPool {  get; private set; } = new List<Bomb>();
     public List<Coin> CoinPool { get; private set; } = new List<Coin>();
 
+    private void Update()
+    {
+        MoveBackground();
+    }
+
     public override void Initialize()
     {
-        throw new System.NotImplementedException();
+        for(int i = 0; i < poolCnt; i++)
+        {
+            CreateObstaclePool<Bomb>(originBomb, BombPool);
+            CreateObstaclePool<Coin>(originCoin, CoinPool);
+        }
     }
 
     public void MoveBackground()
     {
-        // TODO : 배경 이동 로직(머터리얼 속성으로 이동)
+        Vector2 offset = bgRenderer.material.mainTextureOffset;
+        offset.x += speedOfBg * Time.deltaTime;
+        bgRenderer.material.mainTextureOffset = offset;
     }
 
-    public void CreateObstaclePool()
+    public void CreateObstaclePool<T>(GameObject model, List<T> pool)
     {
-        // TODO : 장애물 풀 생성 로직
+        GameObject obstacleTmp = Instantiate(model, transform);
+        obstacleTmp.SetActive(false);
+        pool.Add(model.GetComponent<T>());
     }
+
+
 }

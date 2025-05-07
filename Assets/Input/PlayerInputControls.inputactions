@@ -140,6 +140,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "RunningPlayer",
+            "id": "3c977ef9-52fb-428a-b3c8-d11fa4a0f11c",
+            "actions": [
+                {
+                    "name": "Jump",
+                    "type": "Value",
+                    "id": "0388f54e-d898-4280-8208-4987d75d5da8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e4eb8888-ede6-4cfc-aa34-7bc7c784f28d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

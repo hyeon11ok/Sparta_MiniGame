@@ -13,6 +13,6 @@ public class Obstacle : MonoBehaviour, ITrigger
 
     protected void MoveObstacle()
     {
-        // TODO : 장애물 이동
+        transform.Translate(Vector3.right * -1 * speed * Time.deltaTime);
     }
 }

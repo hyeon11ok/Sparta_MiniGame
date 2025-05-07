@@ -7,6 +7,11 @@ public class Bomb : Obstacle
     [SerializeField] private float speedMin;
     [SerializeField] private float speedMax;
 
+    private void OnEnable()
+    {
+        SetRandomSpeed();
+    }
+
     private void Update()
     {
         MoveObstacle();
