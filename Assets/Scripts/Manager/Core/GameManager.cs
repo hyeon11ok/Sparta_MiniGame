@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Scripting;
@@ -17,6 +18,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public SceneName CurrentScene { get; private set; }
     public bool IsPause { get; private set; } = false;
+
+    public bool god;
+
+    [SerializeField] private AnimatorController playerAnim;
+
+    public AnimatorController PlayerAnim { get { return playerAnim; } }
 
     private void Awake()
     {
@@ -51,6 +58,11 @@ public class GameManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public void ChangePlayerAnim(AnimatorController playerAnim)
+    {
+        this.playerAnim = playerAnim;
     }
 
     public void ChangeScene(SceneName sceneName)

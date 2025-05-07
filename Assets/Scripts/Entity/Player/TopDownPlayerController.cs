@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,12 @@ public class TopDownPlayerController : BasePlayerController
 
     [SerializeField] private float interactRange;
     [SerializeField] private float centerTemp;
+
+    protected override void Start()
+    {
+        base.Start();
+        ChangeAnimator();
+    }
 
     public override void Move()
     {
@@ -68,5 +75,10 @@ public class TopDownPlayerController : BasePlayerController
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position + (Vector3.up * centerTemp), interactRange);
+    }
+
+    public void ChangeAnimator()
+    {
+        animator.runtimeAnimatorController = GameManager.Instance.PlayerAnim;
     }
 }

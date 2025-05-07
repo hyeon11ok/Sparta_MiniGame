@@ -8,6 +8,7 @@ public class Trap : MonoBehaviour, ITrigger
 
     public void TriggerEnterEvent(GameObject gameObject)
     {
-        gameObject.transform.position = startPos;
+        if(!GameManager.Instance.god)
+            gameObject.transform.position = startPos;
     }
 }

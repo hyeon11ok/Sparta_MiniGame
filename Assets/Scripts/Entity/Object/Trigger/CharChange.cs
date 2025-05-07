@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class CharChange : MonoBehaviour, ITrigger
 {
-    [SerializeField] private Animator animator;
-    [SerializeField] private Sprite sprite;
+    [SerializeField] private AnimatorController animator;
 
     public void TriggerEnterEvent(GameObject gameObject)
     {
-        throw new System.NotImplementedException();
-        // TODO : 플레이어의 애니메이터, 이미지 변경
+        GameManager.Instance.ChangePlayerAnim(animator);
+
+        TopDownPlayerController playerController;
+        if(gameObject.TryGetComponent<TopDownPlayerController>(out playerController))
+        {
+            playerController.ChangeAnimator();
+        }
     }
 }
